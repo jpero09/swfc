@@ -1,5 +1,5 @@
 
-var obj = 'cards';
+var obj = 'vehicles';
 var sqlCtrl = require('../controllers/sql/' + obj);
 var mockCtrl = require('../controllers/mock/' + obj);
 
@@ -8,7 +8,6 @@ module.exports = function(app) {
   var options = {};
 
   router.get(['/:id', '/'], function(req, res) {
-    console.log('Calling GetByID');
     var ctrl = getController(req, options);
     ctrl.GetByID(req.params.id, function(err, result) {
       if(err) {

@@ -19,15 +19,15 @@ var MockCards = function(options) {
 };
 util.inherits(MockCards, ctrlBase);
 
-MockCards.prototype.GetByID = function(callback) {
-  return callback(undefined, getMockCard(123));
+MockCards.prototype.GetByID = function(id, callback) {
+  return callback(undefined, getMock(id));
 };
 
 // private methods
-function getMockCard(id) {
+function getMock(id) {
 
   var output = {
-  	id: id,
+  	id: parseInt(id), //Lets pretend this doesnt need validated
   	gender: chance.gender(),
   	nickname: getRandomNickname(),
   	stars: chance.integer({min: 1, max: 5}),
