@@ -1,6 +1,7 @@
 var http = require('http');
 var https = require('https');
 var express = require('express');
+var morgan = require('morgan')
 
 // Globals
 // TODO: Move to seperate file
@@ -20,6 +21,7 @@ app.set('name', pkgjson.name);
 app.set('version', pkgjson.version);
 app.set('host', process.env.HOST || 'localhost'); // || config.get('app:host'));
 app.set('port', process.env.PORT || 3000); // || config.get('app:port'));
+app.use(morgan('tiny'));
 
 // Heartbeat
 var hbMiddleware = require('./middleware/heartbeat');

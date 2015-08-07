@@ -7,14 +7,18 @@ REST API for Star Wars Force Collection data
 Everything is very much a work in progress at this point. Just building out a basic framework to eventually build out into something hopefully usefull. 
 
 # Current routes:
-* GET localhost:3000/heartbeat (shows the service is up and running)
-* GET localhost:3000/cards/123 (MOCK DATA!!!)
+* Info routes:
+	* GET /localhost:3000/heartbeat (shows the service is up and running)
+* Data Routes: (ALL MOCK FOR NOW)
+	* GET /localhost:3000/cards/123
+	* GET /localhost:3000/vehicles/123
+	* GET /localhost:3000/vehicleParts/123
 
 # Future plans
 * Hook up to a SQL backend
 * Vehicles
 * Stack Cards
-* Card routes 
+* Cards
 * Planets
 * Map Quests
 * Quests
