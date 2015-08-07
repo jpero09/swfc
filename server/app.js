@@ -1,6 +1,7 @@
 var http = require('http');
 var https = require('https');
 var express = require('express');
+var morgan = require('morgan')
 
 // Globals
 // TODO: Move to seperate file
@@ -11,13 +12,16 @@ var app = global.express();
 
 // TODO: config
 
-// TODO: logger
+// logger
+var tmpLoggingConfig = {name: 'swfc', console:{enabled: true, level: 'info', pretty: true}};
+global.logger = require('./app/logger').createLogger(tmpLoggingConfig);
 
 // TODO: Middleware
 app.set('name', pkgjson.name);
 app.set('version', pkgjson.version);
 app.set('host', process.env.HOST || 'localhost'); // || config.get('app:host'));
 app.set('port', process.env.PORT || 3000); // || config.get('app:port'));
+app.use(morgan('tiny'));
 
 // Heartbeat
 var hbMiddleware = require('./middleware/heartbeat');
@@ -30,11 +34,10 @@ require('./routes')(app);
 // TODO: Unhandled errors
 // app.use(errorHandler);
 
-// start up the server
-http.createServer(app).listen(app.get('port'), app.get('host'), function toListen() {
-  // TODO: Convert to logger
-  console.log('Software:', process.versions);
-  console.log(
+// Start this party:
+http.createServer(app).listen(app.get('port'), app.get('host'), function() {
+  logger.info('Software:', process.versions);
+  logger.info(
     '%s v%s running @ //%s:%s',
     app.get('name'),
     app.get('version'),

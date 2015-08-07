@@ -1,5 +1,5 @@
 
-var obj = 'cards';
+var obj = 'vehicles';
 var sqlCtrl = require('../controllers/sql/' + obj);
 var mockCtrl = require('../controllers/mock/' + obj);
 
