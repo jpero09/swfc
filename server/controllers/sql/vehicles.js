@@ -1,9 +1,9 @@
 var util = require('util');
 var ctrlBase = require('../base/cards');
 
-var Cards = function(options) {
-  Cards.super_.call(this, options); // Call the base init
+var Vehicles = function(options) {
+  Vehicles.super_.call(this, options); // Call the base init
 };
-util.inherits(Cards, ctrlBase);
+util.inherits(Vehicles, ctrlBase);
 
-module.exports = Cards;
+module.exports = Vehicles;

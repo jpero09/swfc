@@ -73,10 +73,11 @@ function getSWName(fName, lName, maidenName, birthCity) {
 
 function getRandomSkill() {
 	var output = {
-		name: 'Short EVA Up',
+		name: chance.word(),
 		strength: 'Sml',
+    skillGradeMax: chance.integer({min: 1, max: 40}),
 		range: {min: '10%', max: '20%'},
-		description: 'Increases 10-20% of EVA on all the short-ranged units in the Formation.'
+		description: chance.paragraph()
 	};
 	
 	// TODO: Randomize

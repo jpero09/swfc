@@ -32,6 +32,7 @@ module.exports = function(app) {
       useMockAdapter = req.headers.adapter.toLowerCase() === MOCK_ADAPTER;
     }
 
+    // TODO: TESTING HACK. REMOVE!
     return (true || useMockAdapter) ? new mockCtrl(options) : new sqlCtrl(options);
   }
 
