@@ -3,8 +3,20 @@
   "description": "REST API for Star Wars Force Collection data",
   "version": "0.0.1",
   "private": false,
+  "main": "server/app",  
   "scripts": {
-    "start": "node ./server/app"
+    "start": "node ./server/app",
+    "lint": "jscs ."
+  },
+  "keywords": [
+    "swfc",
+    "star wars",
+    "force collection"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpero09/swfc"
   },
   "dependencies": {
     "bunyan": "1.4.0",
@@ -16,6 +28,7 @@
     "request": "2.51.0"    
   },
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "*",
+    "jscs": "2.0.0"
   }
 }
