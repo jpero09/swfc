@@ -1,7 +1,7 @@
 
 var obj = 'cards';
-var sqlCtrl = require('../controllers/sql/' + obj);
-var mockCtrl = require('../controllers/mock/' + obj);
+var SqlCtrl = require('../controllers/sql/' + obj);
+var MockCtrl = require('../controllers/mock/' + obj);
 
 module.exports = function(app) {
   var router = express.Router();
@@ -24,7 +24,7 @@ module.exports = function(app) {
   });
 
   // TODO: Move more central for all controllers to use.
- function getController(req, options) {
+  function getController(req, options) {
     var MOCK_ADAPTER = 'mock';
     var useMockAdapter = false;
 
@@ -33,7 +33,7 @@ module.exports = function(app) {
     }
 
     // TODO: TESTING HACK. REMOVE!
-    return (true || useMockAdapter) ? new mockCtrl(options) : new sqlCtrl(options);
+    return (true || useMockAdapter) ? new MockCtrl(options) : new SqlCtrl(options);
   }
 
   app.use('/' + obj, router);

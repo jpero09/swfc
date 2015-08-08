@@ -30,6 +30,9 @@ Everything is very much a work in progress at this point. Just building out a ba
 * Full CRUD on all routes
 * Personal data (card binder, formations, BP's, etc)
 
+# Rules for Contributors
+* Please run 'npm run lint' before requesting PR. Clean code only!
+
 # FAQ
  * **Why Node?** Because that's what i've been focused on lately. I know this could have been better suited in [INSERT LANGUAGE HERE], but this is what I wanted to get some practice in, so....yeah.
  * **When will 'X' be ready?** I have no idea. This is a downtime project. It may very well never be ready. I'll see what I can do.

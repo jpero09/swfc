@@ -1,7 +1,7 @@
 var http = require('http');
 var https = require('https');
 var express = require('express');
-var morgan = require('morgan')
+var morgan = require('morgan');
 
 // Globals
 // TODO: Move to seperate file
@@ -13,7 +13,8 @@ var app = global.express();
 // TODO: config
 
 // logger
-var tmpLoggingConfig = {name: 'swfc', console:{enabled: true, level: 'info', pretty: true}};
+var tmpLoggingConfig = {name: 'swfc', console: {enabled: true, level: 'info',
+	pretty: true}};
 global.logger = require('./app/logger').createLogger(tmpLoggingConfig);
 
 // TODO: Middleware
@@ -24,8 +25,8 @@ app.set('port', process.env.PORT || 3000); // || config.get('app:port'));
 app.use(morgan('tiny'));
 
 // Heartbeat
-var hbMiddleware = require('./middleware/heartbeat');
-var hb = new hbMiddleware(app.get('name'));
+var HeartbeatMW = require('./middleware/heartbeat');
+var hb = new HeartbeatMW(app.get('name'));
 app.use(hb.Handler);
 
 // Routes

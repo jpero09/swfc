@@ -6,7 +6,7 @@ var Cards = function(options) {
 };
 
 Cards.prototype.GetByID = function(id, callback) {
-	return callback(undefined, defaultResponse);
+  return callback(undefined, defaultResponse);
 };
 
 module.exports = Cards;

@@ -6,7 +6,7 @@
   "main": "server/app",  
   "scripts": {
     "start": "node ./server/app",
-    "lint": "jscs ."
+    "lint": "jscs . --reporter=./node_modules/jscs-stylish/jscs-stylish.js"
   },
   "keywords": [
     "swfc",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "jscs": "2.0.0"
+    "jscs": "2.0.0",
+    "jscs-stylish": "^0.3.1"    
   }
 }

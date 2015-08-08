@@ -6,7 +6,7 @@ var VehicleParts = function(options) {
 };
 
 VehicleParts.prototype.GetByID = function(callback) {
-	return callback(undefined, defaultResponse);
+  return callback(undefined, defaultResponse);
 };
 
 module.exports = VehicleParts;
