@@ -48,7 +48,7 @@ var Cards = {
     }
   },
   firstName: {
-    presence: true    
+    presence: true
   },
   gender: {
     presence: true,
@@ -79,7 +79,7 @@ var Cards = {
       greaterThanOrEqualTo: 1,
       lessThanOrEqualTo: 5
     }
-  }  
+  }
 };
 
 module.exports = Cards;

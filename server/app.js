@@ -29,7 +29,7 @@ app.use(morgan(config.get('app:morganFormat') || 'tiny')); // Morgan Formats: co
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(serveFavicon(path.join(__dirname, '../public/favicon.ico')));
-  
+
 // Heartbeat
 var HeartbeatMW = require('./middleware/heartbeat');
 var hb = new HeartbeatMW(app.get('name'));

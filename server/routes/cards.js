@@ -2,7 +2,7 @@
 var OBJECT = 'cards';
 var ctrlHelper = require('../controllers/controllerHelpers');
 
-var validate = require("validate.js");
+var validate = require('validate.js');
 var cardConstraints = require('../validators/cards');
 
 module.exports = function(app) {
@@ -26,7 +26,7 @@ module.exports = function(app) {
       var ctrl = ctrlHelper.getController(req, options);
       var validationErr = validate(req.body, cardConstraints);
       if(validationErr) {
-        return ctrlHelper.handleControllerResponse(undefined, {httpCode:400, errors: validationErr}, res);
+        return ctrlHelper.handleControllerResponse(undefined, {httpCode: 400, errors: validationErr}, res);
       }
       ctrl.Save(req.body, function(err, result) {
         return ctrlHelper.handleControllerResponse(err, result, res);
