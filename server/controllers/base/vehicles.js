@@ -5,7 +5,19 @@ var Vehicles = function(options) {
   me.options = options;
 };
 
-Vehicles.prototype.GetByID = function(callback) {
+Vehicles.prototype.Get = function(callback) {
+  return callback(undefined, defaultResponse);
+};
+
+Vehicles.prototype.GetByID = function(id, callback) {
+  return callback(undefined, defaultResponse);
+};
+
+Vehicles.prototype.Save = function(vehicle, callback) {
+  return callback(undefined, defaultResponse);
+};
+
+Vehicles.prototype.DeleteByID = function(id, callback) {
   return callback(undefined, defaultResponse);
 };
 

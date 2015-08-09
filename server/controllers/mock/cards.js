@@ -23,6 +23,25 @@ MockCards.prototype.GetByID = function(id, callback) {
   return callback(undefined, getMock(id));
 };
 
+MockCards.prototype.Get = function(callback) {
+  var output = [];
+  _.times(chance.integer({min: 20, max: 85}), function(n) {
+    output.push(getMock(n));
+  });
+
+  return callback(undefined, output);
+};
+
+MockCards.prototype.Save = function(card, callback) {
+  card.id = card.id || chance.integer();
+  card.lastUpdated = new Date();
+  return callback(undefined, card);
+};
+
+MockCards.prototype.DeleteByID = function(id, callback) {
+  return callback(undefined, {status: 'OK'});
+};
+
 // private methods
 function getMock(id) {
 
@@ -79,8 +98,6 @@ function getRandomSkill() {
     range: {min: '10%', max: '20%'},
     description: chance.paragraph()
   };
-
-  // TODO: Randomize
 
   return output;
 }

@@ -2,6 +2,7 @@ var http = require('http');
 var https = require('https');
 var express = require('express');
 var morgan = require('morgan');
+var bodyParser = require('body-parser');
 
 // Globals
 // TODO: Move to seperate file?
@@ -24,6 +25,8 @@ app.set('version', pkgjson.version);
 app.set('host', process.env.HOST || config.get('app:host'));
 app.set('port', process.env.PORT || config.get('app:port'));
 app.use(morgan(config.get('app:morganFormat') || 'tiny')); // Morgan Formats: combined, common, dev, short, tiny
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Heartbeat
 var HeartbeatMW = require('./middleware/heartbeat');
