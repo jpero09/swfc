@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node ./server/app",
     "dev": "NODE_ENV=dev node ./server/app",
-    "lint": "jscs . --reporter=./node_modules/jscs-stylish/jscs-stylish.js"
+    "lint": "jscs . --reporter=./node_modules/jscs-stylish/jscs-stylish.js",
+    "test": "echo \"Error: Repos without tests are bad. Shame. Shame. Shame... \" && exit 1"    
   },
   "keywords": [
     "swfc",
@@ -21,6 +22,10 @@
     "type": "git",
     "url": "https://github.com/jpero09/swfc"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "dependencies": {
     "body-parser": "1.13.3",
     "bunyan": "1.4.0",
@@ -37,6 +42,7 @@
   "devDependencies": {
     "mocha": "*",
     "jscs": "2.0.0",
-    "jscs-stylish": "^0.3.1"    
+    "jscs-stylish": "^0.3.1",
+    "pre-commit": "1.1.1" 
   }
 }
