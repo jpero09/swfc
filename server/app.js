@@ -1,8 +1,9 @@
-var http = require('http');
-var https = require('https');
-var express = require('express');
-var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var express = require('express');
+var http = require('http');
+var morgan = require('morgan');
+var path = require('path');
+var serveFavicon = require('serve-favicon');
 
 // Globals
 // TODO: Move to seperate file?
@@ -27,7 +28,8 @@ app.set('port', process.env.PORT || config.get('app:port'));
 app.use(morgan(config.get('app:morganFormat') || 'tiny')); // Morgan Formats: combined, common, dev, short, tiny
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
+app.use(serveFavicon(path.join(__dirname, '../public/favicon.ico')));
+  
 // Heartbeat
 var HeartbeatMW = require('./middleware/heartbeat');
 var hb = new HeartbeatMW(app.get('name'));
