@@ -15,7 +15,7 @@ app.set('name', pkgjson.name);
 global.config = require('./app/config').initConfig();
 
 // logger
-var loggingConfig = config.get("Logger");
+var loggingConfig = config.get('Logger');
 loggingConfig.name = app.get('name');
 global.logger = require('./app/logger').createLogger(loggingConfig);
 
@@ -39,7 +39,7 @@ require('./routes')(app);
 // Start this party:
 http.createServer(app).listen(app.get('port'), app.get('host'), function() {
   logger.info('Starting: %s v%s', app.get('name'), app.get('version'));
-  logger.debug('Running @ //%s:%s', app.get('host'), app.get('port'));  
+  logger.debug('Running @ //%s:%s', app.get('host'), app.get('port'));
   logger.debug('Environment:', process.env.NODE_ENV);
-  logger.debug('Software:', process.versions);  
+  logger.debug('Software:', process.versions);
 });
