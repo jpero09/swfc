@@ -10,8 +10,7 @@ module.exports = function(app) {
     var ctrl = getController(req, options);
     ctrl.GetByID(req.params.id, function(err, result) {
       if(err) {
-        // TODO: Handle Error
-        console.log('Unhandled error calling ' + obj + '.GetByID:', err);
+        logger.error('Unhandled error calling ' + obj + '.GetByID:', err);
 
         return res.status(500).json({error: err});
       }
