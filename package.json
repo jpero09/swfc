@@ -6,12 +6,15 @@
   "main": "server/app",  
   "scripts": {
     "start": "node ./server/app",
+    "dev": "NODE_ENV=dev node ./server/app",
     "lint": "jscs . --reporter=./node_modules/jscs-stylish/jscs-stylish.js"
   },
   "keywords": [
     "swfc",
     "star wars",
-    "force collection"
+    "force collection",
+    "stats",
+    "card battle"
   ],
   "license": "MIT",
   "repository": {
@@ -25,6 +28,7 @@
     "express": "4.11.1",
     "lodash": "3.8.0",
     "morgan": "1.6.1",
+    "nconf": "0.7.2",    
     "request": "2.51.0"    
   },
   "devDependencies": {
