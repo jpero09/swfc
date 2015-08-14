@@ -1,40 +1,43 @@
 
-var obj = 'cards';
-var sqlCtrl = require('../controllers/sql/' + obj);
-var mockCtrl = require('../controllers/mock/' + obj);
+var OBJECT = 'cards';
+var ctrlHelper = require('../controllers/controllerHelpers');
+
+var validate = require('validate.js');
+var cardConstraints = require('../validators/cards');
 
 module.exports = function(app) {
   var router = express.Router();
-  var options = {};
+  var options = {objectName: OBJECT};
 
-  router.get(['/:id', '/'], function(req, res) {
-    var ctrl = getController(req, options);
-    ctrl.GetByID(req.params.id, function(err, result) {
-      if(err) {
-        // TODO: Handle Error
-        console.log('Unhandled error calling ' + obj + '.GetByID:', err);
-
-        return res.status(500).json({error: err});
+  router
+    .get('/:id', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.GetByID(req.params.id, function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
+    .get('/', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.Get(function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
+    .post('/', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      var validationErr = validate(req.body, cardConstraints);
+      if(validationErr) {
+        return ctrlHelper.handleControllerResponse(undefined, {httpCode: 400, errors: validationErr}, res);
       }
-
-      if(result && result.httpCode) { res.status(result.httpCode); }
-
-      return res.json(result);
+      ctrl.Save(req.body, function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
+    .delete('/:id', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.DeleteByID(function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
     });
-  });
 
-  // TODO: Move more central for all controllers to use.
- function getController(req, options) {
-    var MOCK_ADAPTER = 'mock';
-    var useMockAdapter = false;
-
-    if(req && req.headers && req.headers.adapter) {
-      useMockAdapter = req.headers.adapter.toLowerCase() === MOCK_ADAPTER;
-    }
-
-    // TODO: TESTING HACK. REMOVE!
-    return (true || useMockAdapter) ? new mockCtrl(options) : new sqlCtrl(options);
-  }
-
-  app.use('/' + obj, router);
+  app.use('/' + options.objectName, router);
 };

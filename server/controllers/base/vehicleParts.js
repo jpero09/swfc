@@ -5,8 +5,20 @@ var VehicleParts = function(options) {
   me.options = options;
 };
 
-VehicleParts.prototype.GetByID = function(callback) {
-	return callback(undefined, defaultResponse);
+VehicleParts.prototype.Get = function(callback) {
+  return callback(undefined, defaultResponse);
+};
+
+VehicleParts.prototype.GetByID = function(id, callback) {
+  return callback(undefined, defaultResponse);
+};
+
+VehicleParts.prototype.Save = function(vehicleParts, callback) {
+  return callback(undefined, defaultResponse);
+};
+
+VehicleParts.prototype.DeleteByID = function(id, callback) {
+  return callback(undefined, defaultResponse);
 };
 
 module.exports = VehicleParts;
