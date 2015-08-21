@@ -5,8 +5,17 @@ var Chance = require('chance');
 var ctrlBase = require('../base/cards');
 
 var chance = new Chance();
+chance.mixin({
+    skill: getRandomSkill,
+    types: getRandomTypes,
+    nickname: getRandomNickname,
+    price: getRandomPrice,
+    maxLevel: getRandomMaxLevel,
+    supportAbility: getRandomSupportAbility,
+    percentageBool: getPercentBool
+});
 
-var AFFILIATIONS = ['Beast', 'Bounty Hunter', 'Clone', 'Droid', 'Empire', 'Ewok',
+var TYPES = ['Beast', 'Bounty Hunter', 'Clone', 'Droid', 'Empire', 'Ewok',
   'Galactic Republic', 'Gungan', 'Jabbas Crime Syndicate', 'Jedi', 'Nabooan', 'Pod Racer',
   'Rebel', 'Separatist', 'Sith', 'Tatooinian', 'Wookie'];
 
@@ -48,12 +57,14 @@ function getMock(id) {
   var output = {
     id: parseInt(id), //Lets pretend this doesnt need validated
     gender: chance.gender(),
-    nickname: getRandomNickname(),
+    description: chance.paragraph({sentences: 3}),
+    nickname: chance.nickname(),
     stars: chance.integer({min: 1, max: 5}),
     cost: chance.integer({min: 4, max: 35}),
     range: chance.character({pool: 'SML'}),
     side: chance.character({pool: 'LDN'}),
-    affiliations: getRandomAffiliations(),
+    types: chance.types(),
+    maxLevel: chance.maxLevel(),
     accuracy: chance.integer({min: 80, max: 150}),
     evade: chance.integer({min: 40, max: 160}),
     baseAttack: chance.integer({min: 40, max: 1000}),
@@ -66,7 +77,10 @@ function getMock(id) {
       baseEvo2: './images/cards/' + id + '-Evo2.jpeg',
       baseEvoMax: './images/cards/' + id + '-EvoMax.jpeg'
     },
-    skill: getRandomSkill()
+    skill: chance.skill(),
+    price: chance.price(),
+    supportAbility: chance.supportAbility(),
+    isJunkyardExclusive: chance.percentageBool(.1)
   };
 
   var swName = getSWName(
@@ -91,21 +105,24 @@ function getSWName(fName, lName, maidenName, birthCity) {
 }
 
 function getRandomSkill() {
-  var output = {
-    name: chance.word(),
-    strength: 'Sml',
-    skillGradeMax: chance.integer({min: 1, max: 40}),
-    range: {min: '10%', max: '20%'},
-    description: chance.paragraph()
-  };
+  var output = undefined;
+  if(chance.bool()) {
+    output = {
+      name: chance.word(),
+      strength: 'Sml',
+      skillGradeMax: chance.integer({min: 1, max: 40}),
+      range: {min: '10%', max: '20%'},
+      description: chance.paragraph()
+    };
+  }
 
   return output;
 }
 
-function getRandomAffiliations() {
+function getRandomTypes() {
   var output = [];
   var num = chance.integer({min: 1, max: 5});
-  var shuffled = chance.shuffle(AFFILIATIONS);
+  var shuffled = chance.shuffle(TYPES);
   for(var i = 0; i < num; i++) {
     output.push(shuffled[i]);
   }
@@ -122,5 +139,45 @@ function getRandomNickname() {
 
   return output;
 }
+
+function getRandomPrice() {
+  var base = chance.integer({min: 1, max: 30});
+
+  return base * ((chance.bool()) ? 100 : 1000);
+}
+
+function getRandomMaxLevel() {
+  var base = chance.integer({min: 3, max: 5});
+  return base * 10;
+}
+
+function getRandomSupportAbility() {
+  var output = undefined;
+  if(chance.bool()) {
+    var nLevels = chance.integer({min: 1, max: 5});
+    var baseValue = chance.integer({min: 3, max: 6});
+    var levels = [];
+    _.times(nLevels, function(n){
+      levels.push({ level: n + 1, typeValue: baseValue + ((n - 1) * 3), effect: n + 1});
+    });
+    output = {
+      name: chance.word(),
+      effect: chance.paragraph(),
+      types: chance.types(),
+      levels: levels
+    };
+  }
+
+  return output;
+}
+
+function getPercentBool(percentage) {
+  if(!percentage) { return chance.bool(); }
+  
+  percentage = (percentage < 0) ? (percentage * 100) : percentage;
+  return percentage > chance.integer({min: 0, max: 100});
+}
+
+
 
 module.exports = MockCards;

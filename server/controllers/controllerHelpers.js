@@ -11,8 +11,10 @@ var getController = function(req, options) {
     throw new Error('Missing required object name for controller', options);
   }
 
-  if(req && req.headers && req.headers.adapter) {
-    useMockAdapter = req.headers.adapter.toLowerCase() === MOCK_ADAPTER;
+  if(req) {
+    var header = (req.headers && req.headers.adapter) ? req.headers.adapter.toLowerCase() : undefined;
+    var query = (req.query && req.query.adapter) ? req.query.adapter.toLowerCase() : undefined;
+    useMockAdapter = (header === MOCK_ADAPTER) || (query === MOCK_ADAPTER);
   }
 
   if(useMockAdapter) { Output = require('../controllers/mock/' + objName); }
