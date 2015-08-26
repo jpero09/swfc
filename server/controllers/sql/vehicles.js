@@ -12,7 +12,7 @@ var Vehicles = function(options) {
 
 util.inherits(Vehicles, ctrlBase);
 
-Vehicles.prototype.GetByID = function(id, callback) {
+Vehicles.prototype.Get = function(callback) {
   var self = this;
   var output = [];
 
