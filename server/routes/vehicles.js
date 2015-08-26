@@ -4,7 +4,7 @@ var ctrlHelper = require('../controllers/controllerHelpers');
 module.exports = function(app) {
   var router = express.Router();
   var options = {
-    objectName: OBJECT, 
+    objectName: OBJECT,
     databaseUrl: config.get('database:url')
   };
 
