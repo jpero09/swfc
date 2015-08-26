@@ -8,6 +8,7 @@ var chance = new Chance();
 
 var MockVehicles = function(options) {
   MockVehicles.super_.call(this, options); // Call the base init
+  self.name = 'mock';
 };
 util.inherits(MockVehicles, ctrlBase);
 
@@ -21,6 +22,8 @@ function getMock(id) {
   var output = {
     id: parseInt(id), //Lets pretend this doesnt need validated
     name: 'Blizzard 1',
+    buildTime: chance.integer({min: 60, max: 180}),
+    buildPrice: chance.integer({min: 60, max: 180}),
     cost: chance.integer({min: 10, max: 35}),
     accuracy: chance.integer({min: 80, max: 150}),
     evade: chance.integer({min: 40, max: 160}),
@@ -36,7 +39,8 @@ function getMock(id) {
     images: {
       baseImg: './images/vehicles/' + id + '.jpeg',
     },
-    parts: []
+    parts: [],
+    price: chance.integer({min: 60, max: 180})
   };
 
   return output;

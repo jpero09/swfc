@@ -6,13 +6,13 @@ var ctrlBase = require('../base/cards');
 
 var chance = new Chance();
 chance.mixin({
-    skill: getRandomSkill,
-    types: getRandomTypes,
-    nickname: getRandomNickname,
-    price: getRandomPrice,
-    maxLevel: getRandomMaxLevel,
-    supportAbility: getRandomSupportAbility,
-    percentageBool: getPercentBool
+  skill: getRandomSkill,
+  types: getRandomTypes,
+  nickname: getRandomNickname,
+  price: getRandomPrice,
+  maxLevel: getRandomMaxLevel,
+  supportAbility: getRandomSupportAbility,
+  percentageBool: getPercentBool
 });
 
 var TYPES = ['Beast', 'Bounty Hunter', 'Clone', 'Droid', 'Empire', 'Ewok',
@@ -157,8 +157,9 @@ function getRandomSupportAbility() {
     var nLevels = chance.integer({min: 1, max: 5});
     var baseValue = chance.integer({min: 3, max: 6});
     var levels = [];
-    _.times(nLevels, function(n){
-      levels.push({ level: n + 1, typeValue: baseValue + ((n - 1) * 3), effect: n + 1});
+
+    _.times(nLevels, function(n) {
+      levels.push({level: n + 1, typeValue: baseValue + ((n - 1) * 3), effect: n + 1});
     });
     output = {
       name: chance.word(),
@@ -173,11 +174,9 @@ function getRandomSupportAbility() {
 
 function getPercentBool(percentage) {
   if(!percentage) { return chance.bool(); }
-  
   percentage = (percentage < 0) ? (percentage * 100) : percentage;
+
   return percentage > chance.integer({min: 0, max: 100});
 }
-
-
 
 module.exports = MockCards;

@@ -1,38 +1,20 @@
-var obj = 'vehicles';
-var SqlCtrl = require('../controllers/sql/' + obj);
-var MockCtrl = require('../controllers/mock/' + obj);
+var OBJECT = 'vehicles';
+var ctrlHelper = require('../controllers/controllerHelpers');
 
 module.exports = function(app) {
   var router = express.Router();
-  var options = {};
+  var options = {
+    objectName: OBJECT, 
+    databaseUrl: config.get('database:url')
+  };
 
   router.get(['/:id', '/'], function(req, res) {
-    var ctrl = getController(req, options);
+    var ctrl = ctrlHelper.getController(req, options);
+    logger.debug('Calling "GetByID" on controller:', ctrl);
     ctrl.GetByID(req.params.id, function(err, result) {
-      if(err) {
-        logger.error('Unhandled error calling ' + obj + '.GetByID:', err);
-
-        return res.status(500).json({error: err});
-      }
-
-      if(result && result.httpCode) { res.status(result.httpCode); }
-
-      return res.json(result);
+      return ctrlHelper.handleControllerResponse(err, result, res);
     });
   });
 
-  // TODO: Move more central for all controllers to use.
-  function getController(req, options) {
-    var MOCK_ADAPTER = 'mock';
-    var useMockAdapter = false;
-
-    if(req && req.headers && req.headers.adapter) {
-      useMockAdapter = req.headers.adapter.toLowerCase() === MOCK_ADAPTER;
-    }
-
-    // TODO: TESTING HACK. REMOVE!
-    return (true || useMockAdapter) ? new MockCtrl(options) : new SqlCtrl(options);
-  }
-
-  app.use('/' + obj, router);
+  app.use('/' + OBJECT, router);
 };
