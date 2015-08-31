@@ -1,38 +1,38 @@
-var obj = 'vehicles';
-var SqlCtrl = require('../controllers/sql/' + obj);
-var MockCtrl = require('../controllers/mock/' + obj);
+var OBJECT = 'vehicles';
+var ctrlHelper = require('../controllers/controllerHelpers');
 
 module.exports = function(app) {
   var router = express.Router();
-  var options = {};
+  var options = {
+    objectName: OBJECT,
+    databaseUrl: config.get('database:url')
+  };
 
-  router.get(['/:id', '/'], function(req, res) {
-    var ctrl = getController(req, options);
-    ctrl.GetByID(req.params.id, function(err, result) {
-      if(err) {
-        logger.error('Unhandled error calling ' + obj + '.GetByID:', err);
-
-        return res.status(500).json({error: err});
-      }
-
-      if(result && result.httpCode) { res.status(result.httpCode); }
-
-      return res.json(result);
+  router
+    .get('/:id', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.GetByID(req.params.id, function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
+   .get('/', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.Get(function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
+    .post('/', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.Save(req.body, function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
+    .delete('/:id', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      ctrl.DeleteByID(function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
     });
-  });
 
-  // TODO: Move more central for all controllers to use.
-  function getController(req, options) {
-    var MOCK_ADAPTER = 'mock';
-    var useMockAdapter = false;
-
-    if(req && req.headers && req.headers.adapter) {
-      useMockAdapter = req.headers.adapter.toLowerCase() === MOCK_ADAPTER;
-    }
-
-    // TODO: TESTING HACK. REMOVE!
-    return (true || useMockAdapter) ? new MockCtrl(options) : new SqlCtrl(options);
-  }
-
-  app.use('/' + obj, router);
+  app.use('/' + OBJECT, router);
 };
