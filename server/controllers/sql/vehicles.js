@@ -3,8 +3,9 @@ var ctrlBase = require('../base/vehicles');
 var pg = require('pg');
 
 var SELECT_ALL = 'SELECT * from swfc.vehicles ORDER BY name;';
-var SELECT_BY_ID = 'SELECT * FROM swfc.vehicles WHERE id = $1;'
-var SELECT_PARTS = 'SELECT * FROM swfc.parts p LEFT JOIN swfc."vehicleParts" vp on vp.partid = p.id WHERE vp.vehicleid = $1;'
+var SELECT_BY_ID = 'SELECT * FROM swfc.vehicles WHERE id = $1;';
+var SELECT_PARTS = 'SELECT * FROM swfc.parts p LEFT JOIN swfc."vehicleParts"' +
+  ' vp on vp.partid = p.id WHERE vp.vehicleid = $1;';
 
 var Vehicles = function(options) {
   var self = this;
@@ -40,7 +41,7 @@ Vehicles.prototype.Get = function(callback) {
 
 Vehicles.prototype.GetByID = function(id, callback) {
   var self = this;
-  var output; 
+  var output;
 
   pg.connect(self.databaseUrl, function(err, client, done) {
     if(err) {
@@ -68,7 +69,7 @@ Vehicles.prototype.GetByID = function(id, callback) {
 
 Vehicles.prototype.GetParts = function(id, callback) {
   var self = this;
-  var output = []; 
+  var output = [];
 
   pg.connect(self.databaseUrl, function(err, client, done) {
     if(err) {
