@@ -57,6 +57,14 @@ var Cards = {
       message: '^%{value} is not a valid "gender". ["M", "F"]'
     }
   },
+  maxLevel: {
+    presence: true,
+    numericality: {
+      noStrings: true,
+      onlyInteger: true,
+      greaterThan: 0
+    }
+  },
   range: {
     presence: true,
     inclusion: {

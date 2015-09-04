@@ -2,16 +2,16 @@ var _ = require('lodash');
 var util = require('util');
 var Chance = require('chance');
 
-var ctrlBase = require('../base/vehicleParts');
+var ctrlBase = require('../base/parts');
 
 var chance = new Chance();
 
-var MockVehicleParts = function(options) {
-  MockVehicleParts.super_.call(this, options); // Call the base init
+var MockParts = function(options) {
+  MockParts.super_.call(this, options); // Call the base init
 };
-util.inherits(MockVehicleParts, ctrlBase);
+util.inherits(MockParts, ctrlBase);
 
-MockVehicleParts.prototype.GetByID = function(id, callback) {
+MockParts.prototype.GetByID = function(id, callback) {
   return callback(undefined, getMock(id));
 };
 
@@ -55,4 +55,4 @@ function getRandomSkill() {
   return output;
 }
 
-module.exports = MockVehicleParts;
+module.exports = MockParts;
