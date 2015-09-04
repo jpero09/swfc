@@ -7,7 +7,10 @@ var cardConstraints = require('../validators/cards');
 
 module.exports = function(app) {
   var router = express.Router();
-  var options = {objectName: OBJECT};
+  var options = {
+    objectName: OBJECT,
+    databaseUrl: config.get('database:url')
+  };
 
   router
     .get('/:id', function(req, res) {

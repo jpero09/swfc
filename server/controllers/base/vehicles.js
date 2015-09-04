@@ -1,26 +1,19 @@
-var _ = require('lodash');
+var util = require('util');
+var ctrlBase = require('./baseModel');
 var defaultResponse = {httpCode: 501, message: 'Route not yet implemented.'};
 
 var Vehicles = function(options) {
   var self = this;
-  self.options = options;
-  self.databaseUrl = process.env.DATABASE_URL || options.databaseUrl;
-  self.name = 'base';
+  Vehicles.super_.call(self, options); // Call the base init
+  self.object = 'vehicle';
 };
+util.inherits(Vehicles, ctrlBase);
 
-Vehicles.prototype.Get = function(callback) {
+Vehicles.prototype.GetParts = function(id, callback) {
   return callback(undefined, defaultResponse);
 };
 
-Vehicles.prototype.GetByID = function(id, callback) {
-  return callback(undefined, defaultResponse);
-};
-
-Vehicles.prototype.Save = function(vehicle, callback) {
-  return callback(undefined, defaultResponse);
-};
-
-Vehicles.prototype.DeleteByID = function(id, callback) {
+Vehicles.prototype.GetPilots = function(id, callback) {
   return callback(undefined, defaultResponse);
 };
 

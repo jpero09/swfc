@@ -1,20 +1,17 @@
 var util = require('util');
-var ctrlBase = require('../base/vehicles');
+var ctrlBase = require('../base/parts');
 var pg = require('pg');
 
-var SELECT_ALL = 'SELECT * from swfc.vehicles ORDER BY name;';
-var SELECT_BY_ID = 'SELECT * FROM swfc.vehicles WHERE id = $1;'
-var SELECT_PARTS = 'SELECT * FROM swfc.parts p LEFT JOIN swfc."vehicleParts" vp on vp.partid = p.id WHERE vp.vehicleid = $1;'
+var SELECT_ALL = 'select * from swfc.parts ORDER BY name;';
+var SELECT_BY_ID = 'SELECT * FROM swfc.parts WHERE id = $1;'
+var SELECT_VEHICLES = 'SELECT * FROM swfc.vehicles v LEFT JOIN swfc."vehicleParts" vp on vp.partid = v.id WHERE vp.partid = $1;'
 
-var Vehicles = function(options) {
-  var self = this;
-  Vehicles.super_.call(self, options); // Call the base init
-  self.name = 'postgres';
+var Parts = function(options) {
+  Parts.super_.call(this, options); // Call the base init
 };
+util.inherits(Parts, ctrlBase);
 
-util.inherits(Vehicles, ctrlBase);
-
-Vehicles.prototype.Get = function(callback) {
+Parts.prototype.Get = function(callback) {
   var self = this;
   var output = [];
 
@@ -38,7 +35,7 @@ Vehicles.prototype.Get = function(callback) {
   });
 };
 
-Vehicles.prototype.GetByID = function(id, callback) {
+Parts.prototype.GetByID = function(id, callback) {
   var self = this;
   var output; 
 
@@ -66,7 +63,7 @@ Vehicles.prototype.GetByID = function(id, callback) {
   });
 };
 
-Vehicles.prototype.GetParts = function(id, callback) {
+Parts.prototype.GetVehicles = function(id, callback) {
   var self = this;
   var output = []; 
 
@@ -78,7 +75,7 @@ Vehicles.prototype.GetParts = function(id, callback) {
     }
 
     client
-      .query(SELECT_PARTS, [id])
+      .query(SELECT_VEHICLES, [id])
       .on('row', function(row) {
         output.push(row);
       })
@@ -90,4 +87,4 @@ Vehicles.prototype.GetParts = function(id, callback) {
   });
 };
 
-module.exports = Vehicles;
+module.exports = Parts;
