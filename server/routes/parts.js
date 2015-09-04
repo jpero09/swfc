@@ -1,4 +1,4 @@
-var OBJECT = 'vehicles';
+var OBJECT = 'parts';
 var ctrlHelper = require('../controllers/controllerHelpers');
 
 module.exports = function(app) {
@@ -15,9 +15,9 @@ module.exports = function(app) {
         return ctrlHelper.handleControllerResponse(err, result, res);
       });
     })
-    .get('/:id/parts', function(req, res) {
+   .get('/:id/vehicles', function(req, res) {
       var ctrl = ctrlHelper.getController(req, options);
-      ctrl.GetParts(req.params.id, function(err, result) {
+      ctrl.GetVehicles(req.params.id, function(err, result) {
         return ctrlHelper.handleControllerResponse(err, result, res);
       });
     })

@@ -1,24 +1,11 @@
-var defaultResponse = {httpCode: 501, message: 'Route not yet implemented.'};
+var util = require('util');
+var ctrlBase = require('./baseModel');
 
 var Cards = function(options) {
-  var me = this;
-  me.options = options;
+  var self = this;
+  Cards.super_.call(self, options); // Call the base init
+  self.object = 'card';
 };
-
-Cards.prototype.Get = function(callback) {
-  return callback(undefined, defaultResponse);
-};
-
-Cards.prototype.GetByID = function(id, callback) {
-  return callback(undefined, defaultResponse);
-};
-
-Cards.prototype.Save = function(card, callback) {
-  return callback(undefined, defaultResponse);
-};
-
-Cards.prototype.DeleteByID = function(id, callback) {
-  return callback(undefined, defaultResponse);
-};
+util.inherits(Cards, ctrlBase);
 
 module.exports = Cards;

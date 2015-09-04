@@ -7,6 +7,7 @@ var ctrlBase = require('../base/vehicles');
 var chance = new Chance();
 
 var MockVehicles = function(options) {
+  var self = this;
   MockVehicles.super_.call(this, options); // Call the base init
   self.name = 'mock';
 };
