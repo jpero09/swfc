@@ -2,12 +2,12 @@ var util = require('util');
 var ctrlBase = require('../base/cards');
 var pg = require('pg');
 
-// TODO: This is terrible; dont do this. 
+// TODO: This is terrible; dont do this.
 var SELECT_ALL = 'SELECT * from swfc.cards ORDER BY "firstName";';
-var SELECT_BY_ID = 'SELECT * FROM swfc.cards WHERE id = $1;'
+var SELECT_BY_ID = 'SELECT * FROM swfc.cards WHERE id = $1;';
 var INSERT = 'INSERT INTO swfc.cards("firstName", description, cost, baseattack, ' +
-  'basedefense, accuracy, evade, price, "attackPattern", gender, nickname, stars, '+
-  'range, side, maxlevel, attacksperturn, skill, supportability, isjunkyardexclusive, '+
+  'basedefense, accuracy, evade, price, "attackPattern", gender, nickname, stars, ' +
+  'range, side, maxlevel, attacksperturn, skill, supportability, isjunkyardexclusive, ' +
   '"lastName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20);';
 
 var Cards = function(options) {
@@ -43,7 +43,7 @@ Cards.prototype.Get = function(callback) {
 
 Cards.prototype.GetByID = function(id, callback) {
   var self = this;
-  var output; 
+  var output;
 
   pg.connect(self.databaseUrl, function(err, client, done) {
     if(err) {
@@ -71,7 +71,7 @@ Cards.prototype.GetByID = function(id, callback) {
 
 Cards.prototype.Save = function(obj, callback) {
   var self = this;
-  var output; 
+  var output;
 
   pg.connect(self.databaseUrl, function(err, client, done) {
     if(err) {
@@ -79,7 +79,7 @@ Cards.prototype.Save = function(obj, callback) {
 
       return callback(err);
     }
-    
+
     client
        .query(INSERT, self.GetCreateParams(obj))
       .on('row', function(row) {
@@ -116,6 +116,6 @@ Cards.prototype.GetCreateParams = function(obj) {
     obj.isjunkyardexclusive || false,
     obj.lastName
     ];
-}
+};
 
 module.exports = Cards;

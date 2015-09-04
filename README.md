@@ -2,17 +2,18 @@
 
 REST API for Star Wars Force Collection data
 
+**Dev:**    
+[ ![Codeship Status for jpero09/swfc](https://codeship.com/projects/ce214c90-3532-0133-a610-224ef9168358/status?branch=develop)](https://codeship.com/projects/100703)
+
+**Prod:**   
+[ ![Codeship Status for jpero09/swfc](https://codeship.com/projects/ce214c90-3532-0133-a610-224ef9168358/status?branch=master)](https://codeship.com/projects/100703)
+
 # NOT YET IMPLEMENTED
 
 Everything is very much a work in progress at this point. Just building out a basic framework to eventually build out into something hopefully usefull. 
 
-# Current routes:
-* Info routes:
-	* GET /localhost:3000/heartbeat (shows the service is up and running)
-* Data Routes: (ALL MOCK FOR NOW)
-	* GET /localhost:3000/cards/123
-	* GET /localhost:3000/vehicles/123
-	* GET /localhost:3000/vehicleParts/123
+# Routes:
+* TODO: Swagger
 
 # Future plans
 * Hook up to a SQL backend
@@ -29,9 +30,6 @@ Everything is very much a work in progress at this point. Just building out a ba
 * Ranking Data (BMans, Savage, etc.)
 * Full CRUD on all routes
 * Personal data (card binder, formations, BP's, etc)
-
-# Rules for Contributors
-* Please run 'npm run lint' before requesting PR. Clean code only!
 
 # FAQ
  * **Why Node?** Because that's what i've been focused on lately. I know this could have been better suited in [INSERT LANGUAGE HERE], but this is what I wanted to get some practice in, so....yeah.
