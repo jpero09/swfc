@@ -18,7 +18,7 @@ var getController = function(req, options) {
   }
 
   if(useMockAdapter) { Output = require('../controllers/mock/' + objName); }
-  else { Output = require('../controllers/sql/' + objName); }
+  else { Output = require('../controllers/postgres/' + objName); }
 
   return new Output(options);
 };
