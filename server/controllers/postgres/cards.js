@@ -1,6 +1,6 @@
 var util = require('util');
 var ctrlBase = require('../base/cards');
-var pg = require('pg');
+var pgHelper = require('./_pgHelper');
 
 // TODO: This is terrible; dont do this.
 var SELECT_ALL = 'SELECT * from swfc.cards ORDER BY "firstName";';
@@ -19,78 +19,28 @@ util.inherits(Cards, ctrlBase);
 
 Cards.prototype.Get = function(callback) {
   var self = this;
-  var output = [];
-
-  pg.connect(self.databaseUrl, function(err, client, done) {
-    if(err) {
-      logger.error('Unexpected error connecting to db.', err);
-
-      return callback(err);
-    }
-
-    client
-      .query(SELECT_ALL)
-      .on('row', function(row) {
-        output.push(row);
-      })
-      .on('end', function() {
-        client.end.bind(client);
-
-        return callback(undefined, output);
-      });
-  });
+  pgHelper.query(self.databaseUrl, SELECT_ALL, [], callback);
 };
 
 Cards.prototype.GetByID = function(id, callback) {
   var self = this;
   var output;
-
-  pg.connect(self.databaseUrl, function(err, client, done) {
-    if(err) {
-      logger.error('Unexpected error connecting to db.', err);
-
-      return callback(err);
+  pgHelper.query(self.databaseUrl, SELECT_BY_ID, [id], function(err, results) {
+    if(err) { return callback(err); }
+    if(!results) {
+      output = {httpCode: 404, message: 'Unable to find ' + self.object + ' with ID of ' + id};
+    }
+    else {
+      output = results[0];
     }
 
-    client
-      .query(SELECT_BY_ID, [id])
-      .on('row', function(row) {
-        output = row;
-      })
-      .on('end', function() {
-        client.end.bind(client);
-
-        if(!output) {
-          output = {httpCode: 404, message: 'Unable to find ' + self.object + ' with ID of ' + id};
-        }
-
-        return callback(undefined, output);
-      });
+    return callback(undefined, output);
   });
 };
 
 Cards.prototype.Save = function(obj, callback) {
   var self = this;
-  var output;
-
-  pg.connect(self.databaseUrl, function(err, client, done) {
-    if(err) {
-      logger.error('Unexpected error connecting to db.', err);
-
-      return callback(err);
-    }
-
-    client
-       .query(INSERT, self.GetCreateParams(obj))
-      .on('row', function(row) {
-        output = row;
-      })
-      .on('end', function() {
-        client.end.bind(client);
-
-        return callback(undefined, output);
-      });
-  });
+  pgHelper.query(self.databaseUrl, INSERT, self.GetCreateParams(obj), callback);
 };
 
 Cards.prototype.GetCreateParams = function(obj) {
