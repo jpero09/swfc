@@ -3,8 +3,7 @@ var Cards = {
     presence: true,
     numericality: {
       noStrings: true,
-      onlyInteger: true,
-      greaterThan: 0
+      onlyInteger: true
     }
   },
   attacksPerTurn: {

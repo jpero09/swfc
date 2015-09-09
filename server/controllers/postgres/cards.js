@@ -5,10 +5,10 @@ var pgHelper = require('./_pgHelper');
 // TODO: This is terrible; dont do this.
 var SELECT_ALL = 'SELECT * from swfc.cards ORDER BY "firstName";';
 var SELECT_BY_ID = 'SELECT * FROM swfc.cards WHERE id = $1;';
-var INSERT = 'INSERT INTO swfc.cards("firstName", description, cost, baseattack, ' +
+var INSERT = 'INSERT INTO swfc.cards(id, "firstName", description, cost, baseattack, ' +
   'basedefense, accuracy, evade, price, "attackPattern", gender, nickname, stars, ' +
   'range, side, maxlevel, attacksperturn, skill, supportability, isjunkyardexclusive, ' +
-  '"lastName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20);';
+  '"lastName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21);';
 
 var Cards = function(options) {
   var self = this;
@@ -40,11 +40,12 @@ Cards.prototype.GetByID = function(id, callback) {
 
 Cards.prototype.Save = function(obj, callback) {
   var self = this;
-  pgHelper.query(self.databaseUrl, INSERT, self.GetCreateParams(obj), callback);
+  pgHelper.query(self.databaseUrl, INSERT, self.GetCreateParams(obj, true), callback);
 };
 
-Cards.prototype.GetCreateParams = function(obj) {
-  return [
+Cards.prototype.GetCreateParams = function(obj, isCreate) {
+  var output;
+  output = [
     obj.firstName,
     obj.description || null,
     obj.cost,
@@ -64,8 +65,11 @@ Cards.prototype.GetCreateParams = function(obj) {
     obj.skill || null,
     obj.supportability || -1,
     obj.isjunkyardexclusive || false,
-    obj.lastName
-    ];
+    obj.lastName];
+
+  if(isCreate) { output.splice(0, 0, obj.id); }
+
+  return output;
 };
 
 module.exports = Cards;

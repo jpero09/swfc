@@ -71,12 +71,6 @@ function getMock(id) {
     baseDefense: chance.integer({min: 40, max: 1000}),
     attacksPerTurn: chance.integer({min: 1, max: 2}),
     attackPattern: 'TODO',
-    images: {
-      baseImg: './images/cards/' + id + '-Base.jpeg',
-      baseEvo1: './images/cards/' + id + '-Evo1.jpeg',
-      baseEvo2: './images/cards/' + id + '-Evo2.jpeg',
-      baseEvoMax: './images/cards/' + id + '-EvoMax.jpeg'
-    },
     skill: chance.skill(),
     price: chance.price(),
     supportAbility: chance.supportAbility(),
