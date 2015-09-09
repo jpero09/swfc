@@ -5,7 +5,7 @@ var pgHelper = require('./_pgHelper');
 // TODO: This is terrible; dont do this.
 var SELECT_ALL = 'select * from swfc.parts ORDER BY name;';
 var SELECT_BY_ID = 'SELECT * FROM swfc.parts WHERE id = $1;';
-var SELECT_VEHICLES = 'SELECT * FROM swfc.vehicles v LEFT JOIN swfc."vehicleParts"' +
+var SELECT_VEHICLES = 'SELECT * FROM swfc.vehicles v LEFT JOIN swfc."vehicle_parts"' +
   ' vp on vp.partid = v.id WHERE vp.partid = $1;';
 
 var Parts = function(options) {

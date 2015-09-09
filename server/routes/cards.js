@@ -25,6 +25,17 @@ module.exports = function(app) {
         return ctrlHelper.handleControllerResponse(err, result, res);
       });
     })
+    .post('/import', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      var converted = ctrl.convert(req.body);
+      var validationErr = validate(converted, cardConstraints);
+      if(validationErr) {
+        return ctrlHelper.handleControllerResponse(undefined, {httpCode: 400, errors: validationErr}, res);
+      }
+      ctrl.Save(converted, function(err, result) {
+        return ctrlHelper.handleControllerResponse(err, result, res);
+      });
+    })
     .post('/', function(req, res) {
       var ctrl = ctrlHelper.getController(req, options);
       var validationErr = validate(req.body, cardConstraints);
