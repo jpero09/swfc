@@ -13,7 +13,8 @@ util.inherits(Cards, ctrlBase);
 Cards.prototype.convert = function(card) {
   var output = {};
   if(!card) { return undefined; }
-  
+
+  // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
   output.id = parseInt(card.card_id);
   output.accuracy = parseInt(card.accuracy);
   output.attacksPerTurn = 1;
@@ -28,10 +29,11 @@ Cards.prototype.convert = function(card) {
   output.rarity = parseInt(card.rarity);
   output.description = card.comment;
   output.isJunkyardExclusive = false;
-  
+  // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+
   if(card.attribute === '1') { output.side = 'L'; }
   if(card.attribute === '2') { output.side = 'D'; }
-  
+
   var nickNameIndex = card.name.indexOf('[');
   if(nickNameIndex >= 0) {
     output.name = card.name.substring(0, nickNameIndex - 1);
@@ -41,12 +43,12 @@ Cards.prototype.convert = function(card) {
     output.name = card.name;
   }
 
-  // TODO: Outdated fields, 
+  // TODO: Outdated fields,
   output.stars = output.rarity;
   output.baseAttack = output.attack;
   output.baseDefense = output.defense;
   output.firstName = output.name;
-  
+
   return output;
 };
 

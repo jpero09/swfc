@@ -8,7 +8,8 @@ var SELECT_BY_ID = 'SELECT * FROM swfc.cards WHERE id = $1;';
 var INSERT = 'INSERT INTO swfc.cards(id, "firstName", description, cost, baseattack, ' +
   'basedefense, accuracy, evade, price, "attackPattern", gender, nickname, stars, ' +
   'range, side, maxlevel, attacksperturn, skill, supportability, isjunkyardexclusive, ' +
-  '"lastName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21);';
+  '"lastName") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13,' +
+  ' $14, $15, $16, $17, $18, $19, $20, $21);';
 
 var Cards = function(options) {
   var self = this;
