@@ -6,7 +6,7 @@ var Cards = {
       onlyInteger: true
     }
   },
-  attacksPerTurn: {
+  attack: {
     presence: true,
     numericality: {
       noStrings: true,
@@ -14,15 +14,7 @@ var Cards = {
       greaterThan: 0
     }
   },
-  baseAttack: {
-    presence: true,
-    numericality: {
-      noStrings: true,
-      onlyInteger: true,
-      greaterThan: 0
-    }
-  },
-  baseDefense: {
+  defense: {
     presence: true,
     numericality: {
       noStrings: true,
@@ -42,18 +34,17 @@ var Cards = {
     presence: true,
     numericality: {
       noStrings: true,
-      onlyInteger: true,
-      greaterThan: 0
+      onlyInteger: true
     }
   },
-  firstName: {
+  name: {
     presence: true
   },
   gender: {
     presence: true,
     inclusion: {
-      within: ['m', 'f', 'M', 'F'],
-      message: '^%{value} is not a valid "gender". ["M", "F"]'
+      within: ['m', 'f', 'M', 'F', null],
+      message: '^%{value} is not a valid "gender". ["M", "F", null]'
     }
   },
   maxLevel: {
@@ -78,7 +69,7 @@ var Cards = {
       message: '^%{value} is not a valid "side". ["D", "N", "L"]'
     }
   },
-  stars: {
+  rarity: {
     presence: true,
     numericality: {
       noStrings: true,

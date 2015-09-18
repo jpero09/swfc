@@ -1,6 +1,6 @@
 var util = require('util');
 var _ = require('lodash');
-var ctrlBase = require('./baseModel');
+var ctrlBase = require('./_baseController');
 
 var Cards = function(options) {
   var self = this;
@@ -17,22 +17,37 @@ Cards.prototype.convert = function(card) {
   // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
   output.id = parseInt(card.card_id);
   output.accuracy = parseInt(card.accuracy);
-  output.attacksPerTurn = 1;
+  output.appearDate = card.appear_date;
+  output.attacksPerTurn = parseInt(card.per_num);
   output.attack = parseInt(card.attack);
-  output.defense = parseInt(card.defence);
   output.cost = parseInt(card.cost);
-  output.evade = parseInt(card.avoid);
+  output.defense = parseInt(card.defence);
+  output.description = card.comment;
+  output.evade = (card.avoid) ? parseInt(card.avoid) : 0;
   output.gender = 'M';
+  output.hp = parseInt(card.max_hp);
+  output.isHealer = !!card.is_healer;
+  output.isJunkyardExclusive = false;
+  output.isRepairer = !!card.is_repairer;
+  output.isStun = !!card.is_stun;
   output.maxLevel = parseInt(card.max_level);
   output.price = parseInt(card.price);
+  output.race = parseInt(card.race);
   output.range = (card.range) ? card.range.substring(0,1) : 'M';
   output.rarity = parseInt(card.rarity);
-  output.description = card.comment;
-  output.isJunkyardExclusive = false;
-  // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
   if(card.attribute === '1') { output.side = 'L'; }
-  if(card.attribute === '2') { output.side = 'D'; }
+  else if(card.attribute === '2') { output.side = 'D'; }
+  else { output.side = card.side; }
+
+  // Skills
+  output.skill = {
+    id: card.skill_id,
+    name: card.skill_name,
+    description: card.skill_comment,
+    maxLevel: card.skill_max_level
+  };
+  // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
   var nickNameIndex = card.name.indexOf('[');
   if(nickNameIndex >= 0) {
@@ -42,12 +57,6 @@ Cards.prototype.convert = function(card) {
   else {
     output.name = card.name;
   }
-
-  // TODO: Outdated fields,
-  output.stars = output.rarity;
-  output.baseAttack = output.attack;
-  output.baseDefense = output.defense;
-  output.firstName = output.name;
 
   return output;
 };
