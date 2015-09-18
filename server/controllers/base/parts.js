@@ -1,5 +1,5 @@
 var util = require('util');
-var ctrlBase = require('./baseModel');
+var ctrlBase = require('./_baseController');
 var defaultResponse = {httpCode: 501, message: 'Route not yet implemented.'};
 
 var Parts = function(options) {

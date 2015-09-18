@@ -1,3 +1,4 @@
+var _ = require('lodash');
 
 var OBJECT = 'cards';
 var ctrlHelper = require('../controllers/controllerHelpers');
@@ -24,6 +25,37 @@ module.exports = function(app) {
       ctrl.Get(function(err, result) {
         return ctrlHelper.handleControllerResponse(err, result, res);
       });
+    })
+    .post('/import', function(req, res) {
+      var ctrl = ctrlHelper.getController(req, options);
+      var input = req.body;
+      var output = {httpCode: 200, success: [], errors: []};
+
+      // TODO: Move this to the controller! All of it!!
+
+      if(!_.isArray(input)) { input = [input]; }
+
+      // Save each of our cards:
+      _.each(input, function(i) {
+        var converted = ctrl.convert(i);
+        var validationErr = validate(converted, cardConstraints);
+        if(validationErr) {
+          output.httpCode = 400;
+          validationErr.card = converted;
+          output.errors.push(validationErr);
+        }
+        else {
+          ctrl.Save(converted, function(err, result) {
+            if(err) {
+              output.httpCode = 500;
+              output.errors.push(err);
+            }
+            else { output.success.push(result); }
+          });
+        }
+      });
+
+      return ctrlHelper.handleControllerResponse(undefined, output, res);
     })
     .post('/', function(req, res) {
       var ctrl = ctrlHelper.getController(req, options);

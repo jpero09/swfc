@@ -3,9 +3,11 @@ var ctrlBase = require('../base/vehicles');
 var pgHelper = require('./_pgHelper');
 
 // TODO: This is terrible; dont do this.
+var PARTS_COLS = 'p.id, p.name, p.description, p.cost, p.attack, p.defense, p.hp,' +
+  'p.accuracy, p.evade, p.price, p.attack_pattern';
 var SELECT_ALL = 'SELECT * from swfc.vehicles ORDER BY name;';
 var SELECT_BY_ID = 'SELECT * FROM swfc.vehicles WHERE id = $1;';
-var SELECT_PARTS = 'SELECT * FROM swfc.parts p LEFT JOIN swfc."vehicleParts"' +
+var SELECT_PARTS = 'SELECT ' + PARTS_COLS + ' FROM swfc.parts p LEFT JOIN swfc."vehicle_parts"' +
   ' vp on vp.partid = p.id WHERE vp.vehicleid = $1;';
 
 var Vehicles = function(options) {
@@ -18,7 +20,9 @@ util.inherits(Vehicles, ctrlBase);
 
 Vehicles.prototype.Get = function(callback) {
   var self = this;
-  pgHelper.query(self.databaseUrl, SELECT_ALL, [], callback);
+  pgHelper.query(self.databaseUrl, SELECT_ALL, [], function(err, results) {
+    return callback(err, Vehicles.prototype.ConvertObjects.call(self, results));
+  });
 };
 
 Vehicles.prototype.GetByID = function(id, callback) {
@@ -39,7 +43,7 @@ Vehicles.prototype.GetByID = function(id, callback) {
 
 Vehicles.prototype.GetParts = function(id, callback) {
   var self = this;
-  pgHelper.query(self.databaseUrl, SELECT_PARTS, [], callback);
+  pgHelper.query(self.databaseUrl, SELECT_PARTS, [id], callback);
 };
 
 module.exports = Vehicles;

@@ -16,6 +16,12 @@ var query = function(databaseUrl, query, args, callback) {
       .on('row', function(row) {
         output.push(row);
       })
+      .on('error', function(error) {
+        client.end.bind(client);
+        done();
+
+        return callback(error);
+      })
       .on('end', function() {
         client.end.bind(client);
         done();
