@@ -1,6 +1,6 @@
 var util = require('util');
 var _ = require('lodash');
-var ctrlBase = require('./baseModel');
+var ctrlBase = require('./_baseController');
 
 var Cards = function(options) {
   var self = this;

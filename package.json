@@ -17,6 +17,9 @@
     "stats",
     "card battle"
   ],
+  "engines": {
+    "node": "^0.10.35"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
